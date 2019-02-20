@@ -1,6 +1,6 @@
 <?php
 
-namespace Appzcoder\CrudGenerator\Commands;
+namespace Faelkeller\CrudGenerator\Commands;
 
 use File;
 use Illuminate\Console\Command;

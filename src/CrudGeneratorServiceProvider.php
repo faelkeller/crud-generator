@@ -1,6 +1,6 @@
 <?php
 
-namespace Appzcoder\CrudGenerator;
+namespace Faelkeller\CrudGenerator;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -47,14 +47,14 @@ class CrudGeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->commands(
-            'Appzcoder\CrudGenerator\Commands\CrudCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudControllerCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudModelCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudMigrationCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudViewCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudLangCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudApiCommand',
-            'Appzcoder\CrudGenerator\Commands\CrudApiControllerCommand'
+            'Faelkeller\CrudGenerator\Commands\CrudCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudControllerCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudModelCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudMigrationCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudViewCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudLangCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudApiCommand',
+            'Faelkeller\CrudGenerator\Commands\CrudApiControllerCommand'
         );
     }
 }
