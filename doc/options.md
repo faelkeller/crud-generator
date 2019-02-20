@@ -50,6 +50,7 @@
 | `--form-helper` | Helper for the form. eg. `--form-helper=html`, `--form-helper=laravelcollective` |
 | `--custom-data` | Some additional values to use in the crud. |
 | `--localize` | Allow to localize. e.g. localize=yes  |
+| `--index-fields` | The fields that will be displayed on the index screen. ` --index-fields='title; description' `
 
 ### Model Options:
 

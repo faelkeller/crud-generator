@@ -21,7 +21,8 @@ class CrudViewCommand extends Command
                             {--validations= : Validation rules for the fields.}
                             {--form-helper=html : Helper for the form.}
                             {--custom-data= : Some additional values to use in the crud.}
-                            {--localize=no : Localize the view? yes|no.}';
+                            {--localize=no : Localize the view? yes|no.}
+                            {--index-fields= : The fields that will be displayed on the index screen.}';
 
     /**
      * The console command description.
@@ -302,6 +303,13 @@ class CrudViewCommand extends Command
 
         $fields = $this->option('fields');
         $fieldsArray = explode(';', $fields);
+        
+        $indexFields = [];
+        
+        if ($this->option('index-fields')){
+            $indexFields = $this->option('index-fields');
+            $indexFields = array_map('trim', explode(";", $indexFields));
+        }
 
         $this->formFields = [];
 
@@ -311,6 +319,10 @@ class CrudViewCommand extends Command
             $x = 0;
             foreach ($fieldsArray as $item) {
                 $itemArray = explode('#', $item);
+                
+                if (count($indexFields) && !in_array(trim($itemArray[0]), $indexFields)){
+                    continue;
+                }
 
                 $this->formFields[$x]['name'] = trim($itemArray[0]);
                 $this->formFields[$x]['type'] = trim($itemArray[1]);
