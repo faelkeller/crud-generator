@@ -64,7 +64,11 @@ return [
          * Add new stubs templates here if you need to, like action, datatable...
          * custom_template needs to be activated for this to work
          */
-    ]
+    ],
+    /*
+     * Limit words for colum on index page crud
+     */
+    'limit_words_column_index' => 50,
 
 
 ];

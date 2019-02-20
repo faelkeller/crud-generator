@@ -345,6 +345,8 @@ class CrudViewCommand extends Command
         foreach ($this->formFields as $item) {
             $this->formFieldsHtml .= $this->createField($item);
         }
+        
+        $limit_words = config('crudgenerator.limit_words_column_index');
 
         $i = 0;
         foreach ($this->formFields as $key => $value) {
@@ -358,7 +360,13 @@ class CrudViewCommand extends Command
                 $label = '{{ trans(\'' . $this->crudName . '.' . $field . '\') }}';
             }
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
+            
+            $this->formBodyHtml .= '@if (strlen($item->' . $field . ') > '. $limit_words .')';
+            $this->formBodyHtml .= '<td data-toggle="tooltip" style="cursor:pointer;" data-placement="top" title="{{ $item->' . $field . ' }}">{{ substr($item->' . $field . ', 0, '. $limit_words .') }}...</td>';
+            $this->formBodyHtml .= '@else ';
             $this->formBodyHtml .= '<td>{{ $item->' . $field . ' }}</td>';
+            $this->formBodyHtml .= '@endif ';
+            
             $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
 
             $i++;
