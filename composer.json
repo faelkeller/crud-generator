@@ -1,5 +1,5 @@
 {
-    "name": "appzcoder/crud-generator",
+    "name": "faelkeller/crud-generator",
     "license": "MIT",
     "description": "Laravel CRUD Generator",
     "keywords": [
@@ -11,9 +11,9 @@
     ],
     "authors": [
         {
-            "name": "Sohel Amin",
-            "email": "sohelamincse@gmail.com",
-            "homepage": "http://www.appzcoder.com"
+            "name": "Rafael Keller",
+            "email": "faelkeller@gmail.com",
+            "homepage": "http://www.rafaelkeller.com"
         }
     ],
     "require": {
@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Appzcoder\\CrudGenerator\\": "src/"
+            "Faelkeller\\CrudGenerator\\": "src/"
         },
         "classmap": [
             "tests"
@@ -37,7 +37,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Appzcoder\\CrudGenerator\\CrudGeneratorServiceProvider"
+                "Faelkeller\\CrudGenerator\\CrudGeneratorServiceProvider"
             ]
         }
     }
