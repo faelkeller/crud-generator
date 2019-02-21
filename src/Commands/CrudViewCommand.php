@@ -303,13 +303,6 @@ class CrudViewCommand extends Command
 
         $fields = $this->option('fields');
         $fieldsArray = explode(';', $fields);
-        
-        $indexFields = [];
-        
-        if ($this->option('index-fields')){
-            $indexFields = $this->option('index-fields');
-            $indexFields = array_map('trim', explode(";", $indexFields));
-        }
 
         $this->formFields = [];
 
@@ -319,10 +312,6 @@ class CrudViewCommand extends Command
             $x = 0;
             foreach ($fieldsArray as $item) {
                 $itemArray = explode('#', $item);
-                
-                if (count($indexFields) && !in_array(trim($itemArray[0]), $indexFields)){
-                    continue;
-                }
 
                 $this->formFields[$x]['name'] = trim($itemArray[0]);
                 $this->formFields[$x]['type'] = trim($itemArray[1]);
@@ -346,6 +335,13 @@ class CrudViewCommand extends Command
             $this->formFieldsHtml .= $this->createField($item);
         }
         
+        $indexFields = [];
+        
+        if ($this->option('index-fields')){
+            $indexFields = $this->option('index-fields');
+            $indexFields = array_map('trim', explode(";", $indexFields));
+        }
+        
         $limit_words = config('crudgenerator.limit_words_column_index');
 
         $i = 0;
@@ -359,11 +355,18 @@ class CrudViewCommand extends Command
             if ($this->option('localize') == 'yes') {
                 $label = '{{ trans(\'' . $this->crudName . '.' . $field . '\') }}';
             }
+            
+            $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
+            
+            $i++;
+            
+            if (count($indexFields) && !in_array($value['name'], $indexFields)){
+                continue;
+            }
+            
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
             $this->formBodyHtml .= $this->createColumnIndex($field, $limit_words);
-            $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
-
-            $i++;
+            
         }
 
         $this->templateStubs($path);
