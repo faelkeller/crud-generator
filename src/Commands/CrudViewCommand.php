@@ -360,13 +360,7 @@ class CrudViewCommand extends Command
                 $label = '{{ trans(\'' . $this->crudName . '.' . $field . '\') }}';
             }
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
-            
-            $this->formBodyHtml .= '@if (strlen($item->' . $field . ') > '. $limit_words .')';
-            $this->formBodyHtml .= '<td data-toggle="tooltip" style="cursor:pointer;" data-placement="top" title="{{ $item->' . $field . ' }}">{{ substr($item->' . $field . ', 0, '. $limit_words .') }}...</td>';
-            $this->formBodyHtml .= '@else ';
-            $this->formBodyHtml .= '<td>{{ $item->' . $field . ' }}</td>';
-            $this->formBodyHtml .= '@endif ';
-            
+            $this->formBodyHtml .= $this->createColumnIndex($field, $limit_words);
             $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
 
             $i++;
@@ -651,5 +645,16 @@ class CrudViewCommand extends Command
             $item,
             $markup
         );
+    }
+    
+    protected function createColumnIndex($field, $limit_words){
+        
+        $start = $this->delimiter[0];
+        $end = $this->delimiter[1];
+        
+        $markup = File::get($this->viewDirectoryPath . '/column-index.blade.stub');
+        $markup = str_replace($start . 'field' . $end, $field, $markup);
+        $markup = str_replace($start . 'limit_words' . $end, $limit_words, $markup);
+        return $markup;
     }
 }

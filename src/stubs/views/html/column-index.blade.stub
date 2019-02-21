@@ -1,0 +1,6 @@
+
+                                    @if (strlen($item->%%field%%) > %%limit_words%%)
+                                        <td data-toggle="tooltip" style="cursor:pointer;" data-placement="top" title="{{ $item->%%field%%}}">{{ substr($item->%%field%%, 0, %%limit_words%%) }}...</td>
+                                    @else
+                                        <td>{{ $item->%%field%%}}</td>
+                                    @endif
