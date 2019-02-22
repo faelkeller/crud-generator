@@ -358,14 +358,14 @@ class CrudViewCommand extends Command
             
             $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
             
-            $i++;
-            
             if (count($indexFields) && !in_array($value['name'], $indexFields)){
                 continue;
             }
             
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
             $this->formBodyHtml .= $this->createColumnIndex($field, $limit_words);
+            
+            $i++;
             
         }
 
