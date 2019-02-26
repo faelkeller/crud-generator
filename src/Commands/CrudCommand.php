@@ -181,7 +181,7 @@ class CrudCommand extends Command
 
         $fieldsString = '';
         foreach ($fields->fields as $field) {
-            if ($field->type === 'select' || $field->type === 'enum') {
+            if ($this->checkType($field->type)) {
                 $fieldsString .= $field->name . '#' . $field->type . '#options=' . json_encode($field->options) . ';';
             } else {
                 $fieldsString .= $field->name . '#' . $field->type . ';';
@@ -279,5 +279,27 @@ class CrudCommand extends Command
         $validationsString = rtrim($validationsString, ';');
 
         return $validationsString;
+    }
+    
+    /**
+     * Check field type.
+     *
+     * @param  string $type
+     *
+     * @return boolen
+     */
+    protected function checkType($type)
+    {        
+        if ($type === 'select' || $type === 'enum' ){
+            return true;
+        }
+        
+        $type = explode(",", $type);
+        
+        if (count($type) == 2){
+            return $this->checkType(trim($type[0]));
+        }
+        
+        return false;
     }
 }

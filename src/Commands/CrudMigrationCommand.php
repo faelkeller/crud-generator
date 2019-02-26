@@ -117,7 +117,7 @@ class CrudMigrationCommand extends GeneratorCommand
             foreach ($fields as $field) {
                 $fieldArray = explode('#', $field);
                 $data[$x]['name'] = trim($fieldArray[0]);
-                $data[$x]['type'] = trim($fieldArray[1]);
+                $data[$x]['type'] = $this->returnType($fieldArray[1]);
                 if (($data[$x]['type'] === 'select'
                     || $data[$x]['type'] === 'enum')
                     && isset($fieldArray[2])
@@ -274,5 +274,18 @@ class CrudMigrationCommand extends GeneratorCommand
         $stub = str_replace('{{schema_down}}', $schemaDown, $stub);
 
         return $this;
+    }
+    
+    /**
+     * Return type field for view
+     *
+     * @param  string $type
+     *
+     * @return string
+     */
+    protected function returnType($type)
+    {
+        $type = explode(",", $type);
+        return count($type) == 2 ? trim($type[1]) : trim($type[0]);
     }
 }

@@ -314,7 +314,7 @@ class CrudViewCommand extends Command
                 $itemArray = explode('#', $item);
 
                 $this->formFields[$x]['name'] = trim($itemArray[0]);
-                $this->formFields[$x]['type'] = trim($itemArray[1]);
+                $this->formFields[$x]['type'] = $this->returnType($itemArray[1]);
                 $this->formFields[$x]['required'] = preg_match('/' . $itemArray[0] . '/', $validations) ? true : false;
 
                 if (($this->formFields[$x]['type'] === 'select'
@@ -650,6 +650,14 @@ class CrudViewCommand extends Command
         );
     }
     
+    /**
+     * Create a column for with limitation words for index screen.
+     *
+     * @param  string $field
+     * @param  int $limit_words
+     *
+     * @return string
+     */
     protected function createColumnIndex($field, $limit_words){
         
         $start = $this->delimiter[0];
@@ -659,5 +667,18 @@ class CrudViewCommand extends Command
         $markup = str_replace($start . 'field' . $end, $field, $markup);
         $markup = str_replace($start . 'limit_words' . $end, $limit_words, $markup);
         return $markup;
+    }
+    
+    /**
+     * Return type field for view
+     *
+     * @param  string $type
+     *
+     * @return string
+     */
+    protected function returnType($type)
+    {
+        $type = explode(",", $type);
+        return trim($type[0]);
     }
 }

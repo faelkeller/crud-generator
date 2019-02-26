@@ -29,6 +29,15 @@ php artisan crud:generate Posts --fields='title#string; content#text; category#s
             }
         },
         {
+            "name": "rating",
+            "type": "select,integer",
+            "options": {
+                "1": "Good",
+                "2": "Regular",
+                "3": "Bad"
+            }
+        },
+        {
             "name": "user_id",
             "type": "integer#unsigned"
         }
