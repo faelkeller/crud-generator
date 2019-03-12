@@ -72,6 +72,7 @@ class CrudViewCommand extends Command
         'boolean' => 'radio',
         'enum' => 'select',
         'select' => 'select',
+        'selectfk' => 'select',
         'file' => 'file',
     ];
 
@@ -316,15 +317,28 @@ class CrudViewCommand extends Command
                 $this->formFields[$x]['name'] = trim($itemArray[0]);
                 $this->formFields[$x]['type'] = $this->returnType($itemArray[1]);
                 $this->formFields[$x]['required'] = preg_match('/' . $itemArray[0] . '/', $validations) ? true : false;
+                $this->formFields[$x]['emptyOption'] = "";
 
                 if (($this->formFields[$x]['type'] === 'select'
-                    || $this->formFields[$x]['type'] === 'enum')
+                    || $this->formFields[$x]['type'] === 'enum' 
+                    || $this->formFields[$x]['type'] === 'selectfk')
                     && isset($itemArray[2])
                 ) {
                     $options = trim($itemArray[2]);
                     $options = str_replace('options=', '', $options);
-
-                    $this->formFields[$x]['options'] = $options;
+                    
+                    if ($this->formFields[$x]['type'] != 'selectfk'){
+                        $this->formFields[$x]['options'] = "json_decode('$options', true)";
+                    } else {
+                        $options = explode(",", $options);
+                        $modelReference = trim($options[0]);  
+                        $value = trim($options[1]);
+                        $text = trim($options[2]);                    
+                        $this->formFields[$x]['options'] = "\\App\\$modelReference::pluck('$text', '$value')";
+                        $this->formFields[$x]['emptyOption'] = '<option value="">Selecione...</option>';
+                        $this->formFields[$x]['modelReference'] = $modelReference;
+                        $this->formFields[$x]['textReference'] = $text;
+                    } 
                 }
 
                 $x++;
@@ -354,6 +368,10 @@ class CrudViewCommand extends Command
             $label = ucwords(str_replace('_', ' ', $field));
             if ($this->option('localize') == 'yes') {
                 $label = '{{ trans(\'' . $this->crudName . '.' . $field . '\') }}';
+            }
+            
+            if ($value["type"] == "selectfk"){
+                $field = $value['modelReference'] ."->". $value['textReference'];
             }
             
             $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
@@ -642,8 +660,10 @@ class CrudViewCommand extends Command
         $markup = str_replace($start . 'required' . $end, $required, $markup);
         $markup = str_replace($start . 'options' . $end, $item['options'], $markup);
         $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
+        $markup = str_replace($start . 'emptyOption' . $end, $item['emptyOption'], $markup);
         $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
-
+        //remove empty line for default option
+        $markup = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $markup);
         return $this->wrapField(
             $item,
             $markup
@@ -681,4 +701,5 @@ class CrudViewCommand extends Command
         $type = explode(",", $type);
         return trim($type[0]);
     }
+
 }

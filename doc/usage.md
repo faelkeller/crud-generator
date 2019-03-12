@@ -30,7 +30,7 @@ php artisan crud:generate Posts --fields='title#string; content#text; category#s
         },
         {
             "name": "rating",
-            "type": "select,integer",
+            "type": "select",
             "options": {
                 "1": "Good",
                 "2": "Regular",
@@ -39,7 +39,8 @@ php artisan crud:generate Posts --fields='title#string; content#text; category#s
         },
         {
             "name": "user_id",
-            "type": "integer#unsigned"
+            "type": "selectfk, integer",
+            "options": "User, id, name"
         }
     ],
     "foreign_keys": [
@@ -93,7 +94,7 @@ php artisan crud:migration posts --schema="title#string; body#text"
 For view:
 
 ```
-php artisan crud:view posts --fields="title#string; body#text" --view-path="directory" --route-group=admin --form-helper=html
+php artisan crud:view posts --fields="title#string; body#text; user_id#selectfk,integer#User,id,name" --view-path="directory" --route-group=admin --form-helper=html
 ```
 
 By default, the generator will attempt to append the crud route to your ```Route``` file. If you don't want the route added, you can use this option ```--route=no```.

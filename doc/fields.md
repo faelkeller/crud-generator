@@ -15,6 +15,7 @@ You can use any of the fields from the list.
 * radio
 * select
 * file
+* selectfk
 
 ### Migration Field Types:
 

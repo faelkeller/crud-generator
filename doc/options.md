@@ -42,7 +42,7 @@
 
 | Option    | Description |
 | ---       | ---     |
-| `--fields` | The field names for the form. e.g. ```--fields='title#string; content#text; category#select#options={"technology": "Technology", "tips": "Tips", "health": "Health"}; user_id#integer#unsigned'``` |
+| `--fields` | The field names for the form. e.g. ```--fields='title#string; content#text; category#select#options={"technology": "Technology", "tips": "Tips", "health": "Health"}; user_id#selectfk,integer#User,id,name'``` |
 | `--view-path` | The name of the view path |
 | `--route-group` | Prefix of the route group |
 | `--pk` | The name of the primary key |
