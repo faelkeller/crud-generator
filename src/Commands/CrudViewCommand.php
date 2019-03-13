@@ -312,6 +312,11 @@ class CrudViewCommand extends Command
         if ($fields) {
             $x = 0;
             foreach ($fieldsArray as $item) {
+                
+                if ($item == ""){
+                    continue;
+                }
+                
                 $itemArray = explode('#', $item);
 
                 $this->formFields[$x]['name'] = trim($itemArray[0]);
