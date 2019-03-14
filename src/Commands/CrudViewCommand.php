@@ -363,12 +363,9 @@ class CrudViewCommand extends Command
         
         $limit_words = config('crudgenerator.limit_words_column_index');
 
-        $i = 0;
+        $i = 1;
         foreach ($this->formFields as $key => $value) {
-            if ($i == $this->defaultColumnsToShow) {
-                break;
-            }
-
+            
             $field = $value['name'];
             $label = ucwords(str_replace('_', ' ', $field));
             if ($this->option('localize') == 'yes') {
@@ -381,7 +378,7 @@ class CrudViewCommand extends Command
             
             $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
             
-            if (count($indexFields) && !in_array($value['name'], $indexFields)){
+            if ( (count($indexFields) && !in_array($value['name'], $indexFields)) || (!count($indexFields) && $i > $this->defaultColumnsToShow)){
                 continue;
             }
             
@@ -389,7 +386,6 @@ class CrudViewCommand extends Command
             $this->formBodyHtml .= $this->createColumnIndex($field, $limit_words);
             
             $i++;
-            
         }
 
         $this->templateStubs($path);
