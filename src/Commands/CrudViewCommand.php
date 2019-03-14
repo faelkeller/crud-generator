@@ -376,7 +376,9 @@ class CrudViewCommand extends Command
                 $field = $value['modelReference'] ."->". $value['textReference'];
             }
             
-            $this->formBodyHtmlForShowView .= '<tr><th> ' . $label . ' </th><td> {{ $%%crudNameSingular%%->' . $field . ' }} </td></tr>';
+            $type = $value["type"];
+            
+            $this->formBodyHtmlForShowView .= $this->createLineShow($field, $label, $type);
             
             if ( (count($indexFields) && !in_array($value['name'], $indexFields)) || (!count($indexFields) && $i > $this->defaultColumnsToShow)){
                 continue;
@@ -384,7 +386,7 @@ class CrudViewCommand extends Command
             
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
             
-            $this->formBodyHtml .= $this->createColumnIndex($field, $value["type"], $limit_words);
+            $this->formBodyHtml .= $this->createColumnIndex($field, $type, $limit_words);
             
             $i++;
         }
@@ -673,28 +675,35 @@ class CrudViewCommand extends Command
     }
     
     /**
-     * Create a column for with limitation words for index screen.
+     * Create a column with limitation words for index screen.
      *
      * @param  string $field
+     * @param  string $type
      * @param  int $limit_words
      *
      * @return string
      */
     protected function createColumnIndex($field, $type, $limit_words){
+                
+        $fieldsBoolean = ['radio', 'boolean'];
+        
+        if (in_array($type, $fieldsBoolean)){
+            return '<td>{{ $item->' . $field . ' == 1 ? "Yes" : "No" }}</td>';
+        }
         
         $fieldsText = ['text', 'mediumtext', 'longtext', 'json', 'binary'];
         
-        if (!in_array($type, $fieldsText)){
-            return '<td>{{ $item->' . $field . ' }}</td>';
+        if (in_array($type, $fieldsText)){
+            $start = $this->delimiter[0];
+            $end = $this->delimiter[1];
+
+            $markup = File::get($this->viewDirectoryPath . '/column-index.blade.stub');
+            $markup = str_replace($start . 'field' . $end, $field, $markup);
+            $markup = str_replace($start . 'limit_words' . $end, $limit_words, $markup);
+            return $markup;
         }
         
-        $start = $this->delimiter[0];
-        $end = $this->delimiter[1];
-        
-        $markup = File::get($this->viewDirectoryPath . '/column-index.blade.stub');
-        $markup = str_replace($start . 'field' . $end, $field, $markup);
-        $markup = str_replace($start . 'limit_words' . $end, $limit_words, $markup);
-        return $markup;
+        return '<td>{{ $item->' . $field . ' }}</td>';
     }
     
     /**
@@ -708,6 +717,28 @@ class CrudViewCommand extends Command
     {
         $type = explode(",", $type);
         return trim($type[0]);
+    }
+    
+    /**
+     * Create a line for show screen .
+     *
+     * @param  string $field
+     * @param  string $label
+     * @param  string $type
+     *
+     * @return string
+     */
+    protected function createLineShow($field, $label, $type){
+        
+        $string_field = '{{ $%%crudNameSingular%%->' . $field . ' }}';
+        
+        $fieldsBoolean = ['radio', 'boolean'];
+        
+        if (in_array($type, $fieldsBoolean)){
+            $string_field = '{{ $%%crudNameSingular%%->' . $field . ' == 1 ? "Yes" : "No" }}';
+        }
+        
+        return '<tr><th> ' . $label . ' </th><td> '.$string_field.' </td></tr>';
     }
 
 }
