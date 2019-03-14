@@ -383,7 +383,8 @@ class CrudViewCommand extends Command
             }
             
             $this->formHeadingHtml .= '<th>' . $label . '</th>';
-            $this->formBodyHtml .= $this->createColumnIndex($field, $limit_words);
+            
+            $this->formBodyHtml .= $this->createColumnIndex($field, $value["type"], $limit_words);
             
             $i++;
         }
@@ -679,7 +680,13 @@ class CrudViewCommand extends Command
      *
      * @return string
      */
-    protected function createColumnIndex($field, $limit_words){
+    protected function createColumnIndex($field, $type, $limit_words){
+        
+        $fieldsText = ['text', 'mediumtext', 'longtext', 'json', 'binary'];
+        
+        if (!in_array($type, $fieldsText)){
+            return '<td>{{ $item->' . $field . ' }}</td>';
+        }
         
         $start = $this->delimiter[0];
         $end = $this->delimiter[1];
