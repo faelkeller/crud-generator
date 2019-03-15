@@ -69,6 +69,19 @@ return [
      * Limit words for colum on index page crud
      */
     'limit_words_column_index' => 50,
-
+    
+    'default_words' => [
+        'search' => 'Search...',
+        'addNew' => 'Add New',
+        'view' => 'View',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
+        'confirmDelete' => 'Confirm delete?',
+        'back' => 'Back',
+        'createNew' => 'Create New',
+        'create' => 'Criate',
+        'update' => 'Update'
+    ]
+    
 
 ];

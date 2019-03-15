@@ -240,7 +240,77 @@ class CrudViewCommand extends Command
      * @var array
      */
     protected $delimiter;
-
+    
+    /**
+     * Label default for search
+     *
+     * @var string
+     */
+    protected $labelSearch;
+    
+    /**
+     * Label default for Add New
+     *
+     * @var string
+     */
+    protected $labelAddNew;
+    
+    /**
+     * Label default for View
+     *
+     * @var string
+     */
+    protected $labelView;
+    
+    /**
+     * Label default for Edit
+     *
+     * @var string
+     */
+    protected $labelEdit;
+    
+    /**
+     * Label default for Delete
+     *
+     * @var string
+     */
+    protected $labelDelete;
+    
+    /**
+     * Label default for Confirm delete
+     *
+     * @var string
+     */
+    protected $labelConfirmDelete;
+    
+    /**
+     * Label default for Back
+     *
+     * @var string
+     */
+    protected $labelBack;
+    
+    /**
+     * Label default for Create New 
+     *
+     * @var string
+     */
+    protected $labelCreateNew;
+    
+    /**
+     * Label default for Create
+     *
+     * @var string
+     */
+    protected $labelCreate;
+    
+    /**
+     * Label default for Update 
+     *
+     * @var string
+     */
+    protected $labelUpdate;
+    
     /**
      * Create a new command instance.
      *
@@ -285,6 +355,17 @@ class CrudViewCommand extends Command
         $this->routePrefix = ($this->option('route-group')) ? $this->option('route-group') : '';
         $this->routePrefixCap = ucfirst($this->routePrefix);
         $this->viewName = snake_case($this->argument('name'), '-');
+        $this->labelSearch = config('crudgenerator.default_words.search');
+        $this->labelAddNew = config('crudgenerator.default_words.addNew');
+        $this->labelView = config('crudgenerator.default_words.view');
+        $this->labelEdit = config('crudgenerator.default_words.edit');
+        $this->labelDelete = config('crudgenerator.default_words.delete');
+        $this->labelConfirmDelete = config('crudgenerator.default_words.confirmDelete');
+        $this->labelBack = config('crudgenerator.default_words.back');
+        $this->labelCreateNew = config('crudgenerator.default_words.createNew');
+        $this->labelCreate = config('crudgenerator.default_words.create');
+        $this->labelUpdate = config('crudgenerator.default_words.update');
+        
 
         $viewDirectory = config('view.paths')[0] . '/';
         if ($this->option('view-path')) {
@@ -404,11 +485,11 @@ class CrudViewCommand extends Command
     private function defaultTemplating()
     {
         return [
-            'index' => ['formHeadingHtml', 'formBodyHtml', 'crudName', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey'],
-            'form' => ['formFieldsHtml'],
-            'create' => ['crudName', 'crudNameCap', 'modelName', 'modelNameCap', 'viewName', 'routeGroup', 'viewTemplateDir'],
-            'edit' => ['crudName', 'crudNameSingular', 'crudNameCap', 'modelNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'viewTemplateDir'],
-            'show' => ['formHeadingHtml', 'formBodyHtml', 'formBodyHtmlForShowView', 'crudName', 'crudNameSingular', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey'],
+            'index' => ['formHeadingHtml', 'formBodyHtml', 'crudName', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'labelSearch', 'labelAddNew', 'labelEdit', 'labelDelete', 'labelConfirmDelete'],
+            'form' => ['formFieldsHtml', 'labelCreate', 'labelUpdate'],
+            'create' => ['crudName', 'crudNameCap', 'modelName', 'modelNameCap', 'viewName', 'routeGroup', 'viewTemplateDir', 'labelBack', 'labelCreateNew'],
+            'edit' => ['crudName', 'crudNameSingular', 'crudNameCap', 'modelNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'viewTemplateDir', 'labelEdit', 'labelBack'],
+            'show' => ['formHeadingHtml', 'formBodyHtml', 'formBodyHtmlForShowView', 'crudName', 'crudNameSingular', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'labelEdit', 'labelDelete', 'labelConfirmDelete', 'labelBack'],
         ];
     }
 
