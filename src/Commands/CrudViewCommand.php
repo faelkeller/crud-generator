@@ -487,7 +487,7 @@ class CrudViewCommand extends Command
     private function defaultTemplating()
     {
         return [
-            'index' => ['formHeadingHtml', 'formBodyHtml', 'crudName', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'labelSearch', 'labelAddNew', 'labelEdit', 'labelDelete', 'labelConfirmDelete'],
+            'index' => ['formHeadingHtml', 'formBodyHtml', 'crudName', 'crudNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'labelSearch', 'labelAddNew', 'labelView', 'labelEdit', 'labelDelete', 'labelConfirmDelete'],
             'form' => ['formFieldsHtml', 'labelCreate', 'labelUpdate'],
             'create' => ['crudName', 'crudNameCap', 'modelName', 'modelNameCap', 'viewName', 'routeGroup', 'viewTemplateDir', 'labelBack', 'labelCreateNew'],
             'edit' => ['crudName', 'crudNameSingular', 'crudNameCap', 'modelNameCap', 'modelName', 'viewName', 'routeGroup', 'primaryKey', 'viewTemplateDir', 'labelEdit', 'labelBack'],
