@@ -80,7 +80,9 @@ return [
         'back' => 'Back',
         'createNew' => 'Create New',
         'create' => 'Criate',
-        'update' => 'Update'
+        'update' => 'Update',
+        'yes' => 'Yes',
+        'no' => 'No'
     ]
     
 

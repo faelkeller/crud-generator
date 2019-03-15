@@ -365,6 +365,8 @@ class CrudViewCommand extends Command
         $this->labelCreateNew = config('crudgenerator.default_words.createNew');
         $this->labelCreate = config('crudgenerator.default_words.create');
         $this->labelUpdate = config('crudgenerator.default_words.update');
+        $this->labelYes = config('crudgenerator.default_words.yes');
+        $this->labelNo = config('crudgenerator.default_words.no');
         
 
         $viewDirectory = config('view.paths')[0] . '/';
@@ -769,7 +771,7 @@ class CrudViewCommand extends Command
         $fieldsBoolean = ['radio', 'boolean'];
         
         if (in_array($type, $fieldsBoolean)){
-            return '<td>{{ $item->' . $field . ' == 1 ? "Yes" : "No" }}</td>';
+            return '<td>{{ $item->' . $field . ' == 1 ? "'.$this->labelYes.'" : "'.$this->labelNo.'" }}</td>';
         }
         
         $fieldsText = ['text', 'mediumtext', 'longtext', 'json', 'binary'];
