@@ -79,7 +79,7 @@ return [
         'confirmDelete' => 'Confirm delete?',
         'back' => 'Back',
         'createNew' => 'Create New',
-        'create' => 'Criate',
+        'create' => 'Create',
         'update' => 'Update',
         'yes' => 'Yes',
         'no' => 'No'
