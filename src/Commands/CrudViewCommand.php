@@ -99,6 +99,18 @@ class CrudViewCommand extends Command
         'formBodyHtml',
         'viewTemplateDir',
         'formBodyHtmlForShowView',
+        'labelSearch',
+        'labelAddNew',
+        'labelView',
+        'labelEdit',
+        'labelDelete',
+        'labelConfirmDelete',
+        'labelCreateNew',
+        'labelBack',
+        'labelYes',
+        'labelNo',
+        'labelCreate',
+        'labelUpdate'
     ];
 
     /**
@@ -696,6 +708,8 @@ class CrudViewCommand extends Command
         $markup = File::get($this->viewDirectoryPath . 'form-fields/radio-field.blade.stub');
         $markup = str_replace($start . 'itemName' . $end, $item['name'], $markup);
         $markup = str_replace($start . 'crudNameSingular' . $end, $this->crudNameSingular, $markup);
+        $markup = str_replace($start . 'labelYes' . $end, $this->labelYes, $markup);
+        $markup = str_replace($start . 'labelNo' . $end, $this->labelNo, $markup);
 
         return $this->wrapField(
             $item,
@@ -818,7 +832,7 @@ class CrudViewCommand extends Command
         $fieldsBoolean = ['radio', 'boolean'];
         
         if (in_array($type, $fieldsBoolean)){
-            $string_field = '{{ $%%crudNameSingular%%->' . $field . ' == 1 ? "Yes" : "No" }}';
+            $string_field = '{{ $%%crudNameSingular%%->' . $field . ' == 1 ? "'.$this->labelYes.'" : "'.$this->labelNo.'" }}';
         }
         
         return '<tr><th> ' . $label . ' </th><td> '.$string_field.' </td></tr>';
